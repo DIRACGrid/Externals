@@ -16,7 +16,8 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'Pylons' : "0.9.7",
+versions = { 'WebOb' : "0.9.6.1", #Fucking pylons...
+             'Pylons' : "0.9.7",
              'flup' : '1.0'}
 ch.setPackageVersions( versions )
 

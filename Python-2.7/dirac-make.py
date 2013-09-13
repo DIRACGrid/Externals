@@ -16,7 +16,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'Python' : "2.7.2" }
+versions = { 'Python' : "2.7.5" }
 
 prefix = ch.getPrefix()
 

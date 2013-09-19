@@ -21,7 +21,8 @@ versions = { 'WebOb' : "0.9.6.1", #Fucking pylons...
              'flup' : '1.0'}
 ch.setPackageVersions( versions )
 
-for package in versions:
+#Order if fucking important
+for package in [ 'Pylons', 'WebOb', 'flup' ]:
   #HACK to ensure version of pylons
   if not ch.easyInstall( "%s==%s" % ( package, versions[ package ] ) ):
     ch.ERROR( "Could not deploy %s" % package )

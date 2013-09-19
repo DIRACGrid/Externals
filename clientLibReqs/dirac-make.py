@@ -21,7 +21,7 @@ versions = { 'sqlite' : "3.6.20",
              'bzip2' : "1.0.5",
              'zlib' : "1.2.3",
              'ncurses' : "5.7",
-             'openssl' : "1.0.0d" }
+             'openssl' : "1.0.1e" }
 
 darwinVer = ch.getDarwinVersion()
 

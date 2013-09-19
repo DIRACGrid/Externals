@@ -18,7 +18,7 @@ ch = chClass( here )
 
 versions = { 'Imaging' : "1.1.6",
              'matplotlib' : '0.99.1.1',
-             'numpy' : '1.3.0' }
+             'numpy' : '1.4.1' }
 
 ch.setPackageVersions( versions )
 env = { 'PKG_CONFIG_PATH' : os.path.join( ch.getPrefix(), "lib", "pkgconfig" ) }
@@ -26,6 +26,11 @@ ch.setDefaultEnv( env )
 for package in ( 'numpy', 'Imaging', 'matplotlib' ):
   if not ch.downloadPackage( package ):
     ch.ERROR( "Could not download %s" % package )
+    ch.INFO( "Trying pip" )
+    if ch.pip( package ):
+      continue
+    ch.ERROR( "Could not pip %s" % package )
+    sys.exit(1)
   if not ch.unTarPackage( package ):
     ch.ERROR( "Could not deploy %s" % package )
     sys.exit( 1 )
@@ -44,4 +49,7 @@ include_dirs=%s
 
   if not ch.easyInstall( packageDir ):
     ch.ERROR( "Could not deploy %s" % package )
-    sys.exit( 1 )
+    ch.INFO( "Trying pip" )
+    if not ch.pip( package ):
+      ch.ERROR( "Could not pip %s" % package )
+      sys.exit( 1 )

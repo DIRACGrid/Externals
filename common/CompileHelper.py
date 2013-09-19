@@ -452,6 +452,18 @@ class CompileHelper:
     self.INFO( "Executing %s" % cmd )
     return self.execCommand( cmd, env = env, autoEnv = autoEnv )
 
+  def pip( self, package, switches = "", env = {}, autoEnv = True ):
+    pythonExe = os.path.join( self.__prefix, "bin", "python" )
+    eaExe = os.path.join( self.__prefix, "bin", "pip" )
+    for f in ( pythonExe, eaExe ):
+      if not os.path.isfile( f ):
+        self.ERROR( "Could not find %s" % f )
+        return False
+    cmd = "'%s' '%s' install %s '%s==%s'" % ( pythonExe, eaExe, switches, package, self.__packageVersions[ package ] )
+    self.INFO( "Executing %s" % cmd )
+    return self.execCommand( cmd, env = env, autoEnv = autoEnv )
+
+
   def copyPostInstall( self ):
     self.INFO( "Copying post install scripts" )
     psDir = os.path.join( self.__prefix, "postInstall" )

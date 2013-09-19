@@ -84,6 +84,10 @@ if True:
       ch.ERROR( "Could not deploy Python" )
       sys.exit( 1 )
 
+if not ch.pythonExec( os.path.join( here, "distribute_setup.py" ) ):
+  ch.ERROR( "Could not install setuptools" )
+  sys.exit( 1 )
+
 if not ch.pythonExec( os.path.join( here, "ez_setup.py" ) ):
   ch.ERROR( "Could not install setuptools" )
   sys.exit( 1 )

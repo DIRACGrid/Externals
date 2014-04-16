@@ -90,11 +90,11 @@ if not ch.pythonExec( os.path.join( here, "distribute_setup.py" ) ):
   sys.exit( 1 )
 
 if not ch.pythonExec( os.path.join( here, "ez_setup.py" ) ):
-  ch.ERROR( "Could not install setuptools" )
+  ch.ERROR( "Could not install easy_install" )
   sys.exit( 1 )
   
 if not ch.pythonExec( os.path.join( here, "get-pip.py" ) ):
-  ch.ERROR( "Could not install Distribute" )
+  ch.ERROR( "Could not install pip" )
   sys.exit( 1 )
   
 #if not ch.easyInstall( "setuptools" ):

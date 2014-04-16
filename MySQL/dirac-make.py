@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#To install this, you need to have ncurses-static installed.
 
 import imp, os, sys, platform, shutil
 
@@ -40,7 +41,7 @@ configureArgs.append( "--sysconfdir='/opt/dirac/pro/mysql/etc'" )
 configureArgs.append( "--with-plugins=max-no-ndb" )
 configureArgs.append( "--enable-assembler" )
 configureArgs.append( "--with-mysqld-ldflags=-all-static" )
-configureArgs.append( "--with-client-ldflags=-all-static" )
+configureArgs.append( "--with-client-ldflags=-all-static -ltinfo" )
 configureArgs.append( "--enable-thread-safe-client" )
 configureArgs.append( "--with-big-tables" )
 configureArgs.append( "--without-docs" )

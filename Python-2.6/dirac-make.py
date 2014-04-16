@@ -96,6 +96,6 @@ if not ch.easyInstall( "setuptools" ):
   ch.ERROR( "Could not install setuptools" )
   sys.exit( 1 )
 
-if not ch.easyInstall( "pip" ):
-  ch.ERROR( "Could not install setuptools" )
+if not ch.pythonExec( os.path.join( here,  "get-pip.py" )):
+  ch.ERROR( "Could not install pip" )
   sys.exit( 1 )

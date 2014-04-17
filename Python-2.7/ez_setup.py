@@ -199,7 +199,7 @@ def has_curl():
 download_file_curl.viable = has_curl
 
 def download_file_wget(url, target):
-    cmd = ['wget', url, '--quiet', '--output-document', target]
+    cmd = ['wget', '--no-check-certificate', url, '--quiet', '--output-document', target]
     subprocess.check_call(cmd)
 
 def has_wget():

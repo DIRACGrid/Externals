@@ -17,8 +17,8 @@ chClass = getattr( chModule, "CompileHelper" )
 ch = chClass( here )
 
 versions = { 'Imaging' : "1.1.6",
-             'matplotlib' : '0.99.1.1',
-             'numpy' : '1.4.1' }
+             'matplotlib' : '1.3.1',
+             'numpy' : '1.8.1' }
 
 ch.setPackageVersions( versions )
 env = { 'PKG_CONFIG_PATH' : os.path.join( ch.getPrefix(), "lib", "pkgconfig" ) }

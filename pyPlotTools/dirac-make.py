@@ -18,12 +18,13 @@ ch = chClass( here )
 
 versions = { 'Imaging' : "1.1.6",
              'matplotlib' : '1.3.1',
-             'numpy' : '1.8.1' }
+             'numpy' : '1.8.1',
+             'pytz' : '2014.4' }
 
 ch.setPackageVersions( versions )
 env = { 'PKG_CONFIG_PATH' : os.path.join( ch.getPrefix(), "lib", "pkgconfig" ) }
 ch.setDefaultEnv( env )
-for package in ( 'numpy', 'Imaging', 'matplotlib' ):
+for package in ( 'numpy', 'Imaging', 'matplotlib', 'pytz' ):
   if not ch.downloadPackage( package ):
     ch.ERROR( "Could not download %s" % package )
     ch.INFO( "Trying pip" )

@@ -18,7 +18,8 @@ ch = chClass( here )
 
 versions = { 'WebOb' : "0.9.6.1", #Fucking pylons...
              'Pylons' : "0.9.7",
-             'flup' : '1.0'}
+             'flup' : '1.0',
+             'webtest' : '1.4.3'}
 ch.setPackageVersions( versions )
 
 #Order if fucking important

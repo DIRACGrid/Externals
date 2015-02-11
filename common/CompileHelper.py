@@ -163,7 +163,13 @@ class CompileHelper:
     self.INFO( "No %s found locally, downloading" % package )
     remoteLocs = []
     if remoteLocation:
-      remoteLocs.append( ( remoteLocation, os.path.join( self.__packageRoot, remoteLocation.split("/")[-1] ) ) )
+      name = package
+      last = remoteLocation.split("/")[-1]
+      for tarExt in ( "tar.gz", "tar.bz2", "tgz", "tbz2" ):
+        if last.find( tarExt ) > -1:
+          name = "%s.%s" % ( name, tarExt )
+          break
+      remoteLocs.append( ( remoteLocation, os.path.join( self.__packageRoot, name ) ) )
     else:
       for tarExt in ( "tar.gz", "tar.bz2" ):
         remoteLocs.append( ( "%s/%s/%s.%s" % ( PKG_SOURCE, self.__moduleName, package, tarExt ),

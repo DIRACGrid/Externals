@@ -40,24 +40,29 @@ if compileOpenSSL:
     sys.exit( 1 )
 
 ch = chClass( here )
+version = "0.6.0"
+ch.setPackageVersions( { "GSI": version } )
 
-prefix = ch.getPrefix()
+gsidir = os.path.join( here, "pyGSI-%s" % version )
+
+ch.downloadPackage( "GSI", "https://github.com/acasajus/pyGSI/archive/%s.tar.gz" % version )
+ch.unTarPackage( "GSI" )
 
 libPaths = []
 for lp in ( "lib", "lib64" ):
-  lp = os.path.join( prefix, lp )
+  lp = os.path.join( ch.getPrefix(), lp )
   if os.path.isdir( lp ):
     libPaths.append( lp )
 
-fd = open( os.path.join( here, "setup.cfg" ), "w" )
-fd.write( 
-""" 
+fd = open( os.path.join( gsidir, "setup.cfg" ), "w" )
+fd.write(
+"""
 [build_ext]
 include_dirs = %s
 library_dirs = %s
 define = OPENSSL_NO_KRB5
-verbose = 1         
-""" % ( os.path.join( prefix, "include" ), ":".join( libPaths ) )
+verbose = 1
+""" % ( os.path.join( ch.getPrefix(), "include" ), ":".join( libPaths ) )
  )
 fd.close()
 
@@ -68,6 +73,6 @@ fd.close()
 #    sys.exit( 1 )
 
 
-if not ch.easyInstall( here ):
+if not ch.easyInstall( gsidir ):
   ch.ERROR( "Could not deploy GSI" )
   sys.exit( 1 )

@@ -40,7 +40,7 @@ if compileOpenSSL:
     sys.exit( 1 )
 
 ch = chClass( here )
-version = "0.6.1"
+version = "0.6.2"
 ch.setPackageVersions( { "GSI": version } )
 
 gsidir = os.path.join( here, "pyGSI-%s" % version )

@@ -16,7 +16,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'Python' : "2.7.5" }
+versions = { 'Python' : "2.7.6" }
 
 prefix = ch.getPrefix()
 
@@ -39,7 +39,7 @@ ch.setDefaultEnv( env )
 
 darwinVer = ch.getDarwinVersion()
 
-pythonFile = "Python-%s.tar.bz2" % versions[ 'Python' ]
+pythonFile = "Python-%s.tgz" % versions[ 'Python' ]
 pythonFilePath = os.path.join( here, pythonFile )
 
 if not os.path.isfile( pythonFilePath ):

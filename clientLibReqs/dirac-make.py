@@ -108,7 +108,7 @@ else:
   if not ch.doMake( 'openssl', makeJobs = 1 ):
     ch.ERROR( "Could not deploy openssl" )
     sys.exit( 1 )
-  if not ch.doInstall( 'openssl' ):
+  if not ch.doInstall( 'openssl', makeExecutable='make install_sw' ):
     ch.ERROR( "Could not deploy openssl" )
     sys.exit( 1 )
 

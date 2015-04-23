@@ -38,11 +38,11 @@ if compileLibs:
     ch.ERROR( "Could not deploy zlib" )
     sys.exit( 1 )
 
-  if not ch.deployPackage( 'readline', configureArgs = '--enable-shared --enable-threadsafe' ):
+  if not ch.deployPackage( 'readline', configureArgs = '--enable-shared' ):
     ch.ERROR( "Could not deploy readline" )
     sys.exit( 1 )
 
-  if not ch.deployPackage( 'sqlite', configureArgs = '--enable-shared --disable-tcl --enable-threadsafe' ):
+  if not ch.deployPackage( 'sqlite', configureArgs = '--enable-shared --enable-threadsafe' ):
     ch.ERROR( "Could not deploy sqlite" )
     sys.exit( 1 )
 

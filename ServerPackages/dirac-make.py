@@ -21,7 +21,8 @@ versions = { 'mock' : "0.7.1",
              'rst2pdf' : '0.16',
              'nose' : '1.0',
              'pylint' : '0.23.0',
-             'coverage' : '3.4' }
+             'coverage' : '3.4',
+             'pexpect' : '3.3' }
 
 ch.setPackageVersions( versions )
 

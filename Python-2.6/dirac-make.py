@@ -59,7 +59,7 @@ if True:
 
   prefix = ch.getPrefix()
   #configureArgs = "CFLAGS='-L%s/lib' CPPFLAGS='-I%s/include -I%s/include/ncurses'" % ( prefix, prefix, prefix )
-  configureArgs = ""
+  configureArgs = " --enable-shared "
 
   #Hack for python2.5 and Leopard
 

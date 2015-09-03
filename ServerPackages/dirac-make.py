@@ -29,6 +29,7 @@ ch.setPackageVersions( versions )
 for package in versions:
   packageToInstall = "%s>=%s" % ( package, versions[ package ] )
   if not ch.easyInstall( packageToInstall ):
-    ch.ERROR( "Could not deploy %s" % package )
+    ch.ERROR( "Could not deploy %s with easy_install" % package )
     if not ch.pip( packageToInstall ):
+      ch.ERROR( "Could not deploy %s with pip" % package )
       sys.exit( 1 )

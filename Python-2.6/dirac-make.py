@@ -59,7 +59,7 @@ if True:
 
   prefix = ch.getPrefix()
   #configureArgs = "CFLAGS='-L%s/lib' CPPFLAGS='-I%s/include -I%s/include/ncurses'" % ( prefix, prefix, prefix )
-  configureArgs = " --enable-shared "
+  configureArgs = " --enable-shared --enable-static --enable-unicode=ucs4 "
 
   #Hack for python2.5 and Leopard
 

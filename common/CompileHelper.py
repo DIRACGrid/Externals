@@ -465,7 +465,7 @@ class CompileHelper:
       if not os.path.isfile( f ):
         self.ERROR( "Could not find %s" % f )
         return False
-    cmd = "'%s' '%s' install %s '%s==%s'" % ( pythonExe, eaExe, switches, package, self.__packageVersions[ package ] )
+    cmd = "'%s' '%s' install %s '%s'" % ( pythonExe, eaExe, switches, package )
     self.INFO( "Executing %s" % cmd )
     return self.execCommand( cmd, env = env, autoEnv = autoEnv )
 

@@ -16,7 +16,8 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'sqlalchemy' : "0.9.8" }
+versions = { 'sqlalchemy' : "0.9.8",
+             'fuse-python' : "0.2"}
 
 ch.setPackageVersions( versions )
 

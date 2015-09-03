@@ -27,6 +27,8 @@ versions = { 'mock' : "0.7.1",
 ch.setPackageVersions( versions )
 
 for package in versions:
-  if not ch.easyInstall( "%s>=%s" % ( package, versions[ package ] ) ):
+  packageToInstall = "%s>=%s" % ( package, versions[ package ] )
+  if not ch.easyInstall( packageToInstall ):
     ch.ERROR( "Could not deploy %s" % package )
-    sys.exit( 1 )
+    if not ch.pip( packageToInstall ):
+      sys.exit( 1 )

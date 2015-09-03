@@ -59,21 +59,7 @@ if True:
 
   prefix = ch.getPrefix()
   #configureArgs = "CFLAGS='-L%s/lib' CPPFLAGS='-I%s/include -I%s/include/ncurses'" % ( prefix, prefix, prefix )
-  configureArgs = " --enable-shared "
-
-  #Hack for python2.5 and Leopard
-
-  if darwinVer == "10.5":
-    fd = open( os.path.join( ch.getPackageDir( "Python" ), "pyconfig.h" ), "a" )
-    fd.write( "\n#define SETPGRP_HAVE_ARG 1\n" )
-    fd.close()
-    configureArgs += " --disable-toolbox-glue"
-    ch.replaceInFile( os.path.join( ch.getPackageDir( 'Python' ), "configure" ), "-Wno-long-double ", "" )
-  elif darwinVer == "10.6":
-    env = ch.getDefaultEnv()
-    env[ 'MACOSX_DEPLOYMENT_TARGET' ] = "10.5"
-    #configureArgs = "--enable-universalsdk=/"
-    ch.setDefaultEnv( env )
+  configureArgs = " --enable-shared --enable-static --enable-unicode=ucs4 "
 
   if not ch.doConfigure( "Python", extraArgs = configureArgs ):
     ch.ERROR( "Could not deploy Python" )

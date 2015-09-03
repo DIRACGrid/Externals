@@ -28,7 +28,7 @@ for package in ( 'numpy', 'Imaging', 'matplotlib', 'pytz' ):
   if not ch.downloadPackage( package ):
     ch.ERROR( "Could not download %s" % package )
     ch.INFO( "Trying pip" )
-    if ch.pip( package ):
+    if ch.pip( "%s==%s" % ( package, versions[package] ) ):
       continue
     ch.ERROR( "Could not pip %s" % package )
     sys.exit(1)
@@ -51,6 +51,6 @@ include_dirs=%s
   if not ch.easyInstall( packageDir ):
     ch.ERROR( "Could not deploy %s" % package )
     ch.INFO( "Trying pip" )
-    if not ch.pip( package ):
+    if not ch.pip( "%s==%s" % ( package, versions[package] ) ):
       ch.ERROR( "Could not pip %s" % package )
       sys.exit( 1 )

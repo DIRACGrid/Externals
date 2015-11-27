@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil
+import imp
+import os
+import sys
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -16,13 +18,13 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'mock' : "0.7.1",
-             'Sphinx' : '1.0.7',
-             'rst2pdf' : '0.16',
-             'nose' : '1.0',
-             'pylint' : '0.23.0',
-             'coverage' : '3.4',
-             'pexpect' : '3.3' }
+versions = { 'mock' : "1.3.0",
+             'Sphinx' : '1.3.1',
+             'rst2pdf' : '0.93',
+             'nose' : '1.3.7',
+             'pylint' : '1.4.4',
+             'coverage' : '4.0.3',
+             'pexpect' : '4.0.1'}
 
 ch.setPackageVersions( versions )
 

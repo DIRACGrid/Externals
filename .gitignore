@@ -7,3 +7,8 @@
 
 *.pyc
 *.pyo
+
+.project
+.pydevproject
+
+.distribute_setup.py.swp

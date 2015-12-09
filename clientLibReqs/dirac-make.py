@@ -3,7 +3,7 @@
 import imp, os, sys, platform, urllib
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
-chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
+chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py")
 try:
   fd = open( chFilePath )
 except Exception, e:
@@ -21,7 +21,7 @@ versions = { 'sqlite' : "3.8.8.3",
              'bzip2' : "1.0.6",
              'zlib' : "1.2.8",
              'ncurses' : "5.9",
-             'openssl' : "1.0.1g" }
+             'openssl' : "1.0.2e" }
 
 darwinVer = ch.getDarwinVersion()
 
@@ -111,4 +111,3 @@ else:
   if not ch.doInstall( 'openssl', makeExecutable='make install_sw' ):
     ch.ERROR( "Could not deploy openssl" )
     sys.exit( 1 )
-

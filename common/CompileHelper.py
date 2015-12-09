@@ -1,3 +1,4 @@
+__RCSID__ = "$Id:"
 
 import sys
 import os
@@ -6,16 +7,19 @@ import shutil
 import platform
 import re
 import urllib2
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 try:
   import subprocess
   useSubprocess = True
-except:
+except ImportError:
   import popen2
   useSubprocess = False
 
 PKG_SOURCE = "http://lhcbproject.web.cern.ch/lhcbproject/dist/DIRAC3/Externals"
 
-class CompileHelper:
+class CompileHelper(object):
 
   def __init__( self, packageRoot ):
     packageRoot = os.path.realpath( packageRoot )
@@ -30,19 +34,6 @@ class CompileHelper:
     self.__packageVersions = {}
     self.__defaultEnv = {}
     self.__processCommandLine()
-
-  def DEBUG( self, msg ):
-    if self.__enableDebug:
-      print "DEBUG: %s" % msg
-      sys.stdout.flush()
-
-  def INFO( self, msg ):
-    print "INFO:  %s" % msg
-    sys.stdout.flush()
-
-  def ERROR( self, msg ):
-    print "ERROR: %s" % msg
-    sys.stdout.flush()
 
   def getDarwinVersion( self ):
     return ".".join( platform.mac_ver()[0].split( "." )[:2] )
@@ -82,11 +73,10 @@ class CompileHelper:
                      ( 'l:', 'platform=', 'Use <platfom> instead of autodiscovered one' ),
                      ( 'd', 'debug', 'Enable debug output' ),
                      ( 'j:', 'makeJobs=', 'Number of make jobs, by default is 1' ),
-                     ( 'o:', 'redirectOutputTo=', 'Redirect commands output to <file>' )
-                 )
+                     ( 'o:', 'redirectOutputTo=', 'Redirect commands output to <file>' ),)
     optList, args = getopt.getopt( sys.argv[1:],
-                               "".join( [ opt[0] for opt in self.cmdOpts ] ),
-                               [ opt[1] for opt in self.cmdOpts ] )
+                                   "".join( [ opt[0] for opt in self.cmdOpts ] ),
+                                   [ opt[1] for opt in self.cmdOpts ] )
     for o, v in optList:
       if o in ( '-h', '--help' ):
         print "Usage %s <opts>" % sys.argv[0]
@@ -103,7 +93,7 @@ class CompileHelper:
         try:
           self.__makeJobs = int( v )
         except:
-          self.ERROR( "Make jobs has to be a number" )
+          logging.error( "Make jobs has to be a number" )
           sys.exit( 1 )
       elif o in ( '-o', '--redirectOutputTo' ):
         self.__redirectOutput = os.path.abspath( v )
@@ -115,8 +105,8 @@ class CompileHelper:
     if not self.__prefix:
       self.__prefix = self.__discoverPrefix()
 
-    self.DEBUG( "PLATFORM : %s" % self.__platform )
-    self.DEBUG( "PREFIX : %s" % self.__prefix )
+    logging.debug( "PLATFORM : %s", self.__platform )
+    logging.debug( "PREFIX : %s", self.__prefix )
 
 
   def getExternalsRoot( self ):
@@ -151,16 +141,16 @@ class CompileHelper:
       os.makedirs( prefix )
     return prefix
 
-  def downloadPackage( self, package, remoteLocation = False ):
+  def downloadPackage( self, package, remoteLocation = '' ):
     if package in self.__packageVersions:
       package = "%s-%s" % ( package, self.__packageVersions[ package ] )
-    self.INFO( "Finding %s" % package )
+    logging.info( "Finding %s", package )
     for tarExt in ( "tar.gz", "tar.bz2", "tgz", "tbz2" ):
       tarLoc = os.path.join( self.__packageRoot, "%s.%s" % ( package, tarExt ) )
       if os.path.isfile( tarLoc ):
-        self.INFO( "%s exists" % tarLoc )
+        logging.info( "%s exists", tarLoc )
         return True
-    self.INFO( "No %s found locally, downloading" % package )
+    logging.info( "No %s found locally, downloading", package )
     remoteLocs = []
     if remoteLocation:
       name = package
@@ -175,16 +165,16 @@ class CompileHelper:
         remoteLocs.append( ( "%s/%s/%s.%s" % ( PKG_SOURCE, self.__moduleName, package, tarExt ),
                            os.path.join( self.__packageRoot, "%s.%s" % ( package, tarExt ) ) ) )
     for remoteURL, localFile in remoteLocs:
-      self.INFO( "Trying to download %s" % remoteURL )
+      logging.info( "Trying to download %s", remoteURL )
       try:
         remote = urllib2.urlopen( remoteURL )
-      except Exception, e:
-        self.ERROR( "Cannot retrieve %s: %s" % ( remoteURL, str(e) ) )
+      except Exception as e:
+        logging.error( "Cannot retrieve %s: %s", remoteURL, str(e) )
         continue
       try:
         local = open( localFile, "wb" )
       except IOError, e:
-        self.ERROR( "Cannot open %s; %s" % ( localFile, str(e) ) )
+        logging.error( "Cannot open %s; %s", localFile, str(e) )
       try:
         data = remote.read( 262144 )
         while data:
@@ -192,10 +182,10 @@ class CompileHelper:
           data = remote.read( 262144 )
         local.close()
         remote.close()
-        self.INFO( "Downloaded %s" % localFile )
+        logging.info( "Downloaded %s", localFile )
         return True
-      except Exception, e:
-        self.ERROR( "Error reading from %s: %s" % ( remoteURL, str(e) ) )
+      except Exception as e:
+        logging.error( "Error reading from %s: %s", remoteURL, str(e) )
         try:
           os.unlink( localFile )
         except:
@@ -206,27 +196,27 @@ class CompileHelper:
   def unTarPackage( self, package ):
     if package in self.__packageVersions:
       package = "%s-%s" % ( package, self.__packageVersions[ package ] )
-    self.INFO( "Untaring %s" % package )
+    logging.info( "Untaring %s", package )
     p = os.path.join( self.__packageRoot, package )
     if os.path.isdir( p ):
-      self.DEBUG( "Deleting %s" % p )
+      logging.debug( "Deleting %s", p )
       shutil.rmtree( p )
     for gzExt in ( "tar.gz", "tgz" ):
       p = os.path.join( self.__packageRoot, "%s.%s" % ( package, gzExt ) )
-      self.DEBUG( "Trying %s" % p )
+      logging.debug( "Trying %s", p )
       if os.path.isfile( p ):
         if not os.system( "cd '%s'; tar xzf '%s'" % ( self.__packageRoot, p ) ):
           return True
         else:
-          self.ERROR( "Could not untar %s" % p )
+          logging.error( "Could not untar %s", p )
     for gzExt in ( "tar.bz2", "tbz" ):
       p = os.path.join( self.__packageRoot, "%s.%s" % ( package, gzExt ) )
-      self.DEBUG( "Trying %s" % p )
+      logging.debug( "Trying %s", p )
       if os.path.isfile( p ):
         if not os.system( "cd '%s'; tar xjf '%s'" % ( self.__packageRoot, p ) ):
           return True
         else:
-          self.ERROR( "Could not untar %s" % p )
+          logging.error( "Could not untar %s", p )
     return False
 
   def getPackageDir( self, package ):
@@ -339,7 +329,7 @@ class CompileHelper:
       if package in self.__packageVersions:
         package = "%s-%s" % ( package, self.__packageVersions[ package ] )
     cmdEnv = self.getCommandEnv( env, autoEnv, discoverEnv )
-    self.DEBUG( "ENV: %s" % cmdEnv )
+    logging.debug( "ENV: %s" % cmdEnv )
 
     if self.__redirectOutput:
       fd = open( self.__redirectOutput, "a" )
@@ -361,7 +351,7 @@ class CompileHelper:
         envStr += ";"
       command = "%s cd '%s'; %s" % ( envStr, cwd, command )
 
-    self.DEBUG( "Executing %s for package %s" % ( command, package ) )
+    logging.debug( "Executing %s for package %s" % ( command, package ) )
     if useSubprocess:
       return subprocess.Popen( command, shell = True, cwd = cwd, env = cmdEnv ).wait() == 0
     else:
@@ -370,7 +360,7 @@ class CompileHelper:
   def doConfigure( self, package, extraArgs = "", env = {}, configureExecutable = "configure", autoEnv = False ):
     configurePath = os.path.join( self.__packageRoot, package, configureExecutable )
     configureCmd = "./%s --prefix='%s' %s" % ( configureExecutable, self.__prefix, extraArgs )
-    self.INFO( "Running %s for %s" % ( configureCmd, package ) )
+    logging.info( "Running %s for %s" % ( configureCmd, package ) )
     return self.execCommand( configureCmd, package, env, autoEnv = autoEnv )
 
   def doMake( self, package, extraArgs = "", env = {}, makeExecutable = "make", autoEnv = False, makeJobs = 0 ):
@@ -379,7 +369,7 @@ class CompileHelper:
     makeCmd = "%s -j %d" % ( makeExecutable, makeJobs )
     if extraArgs:
       makeCmd = "%s %s" % ( makeCmd, extraArgs )
-    self.INFO( "Running %s for %s" % ( makeCmd, package ) )
+    logging.info( "Running %s for %s" % ( makeCmd, package ) )
     return self.execCommand( makeCmd, package, env, autoEnv = autoEnv )
 
   def doInstall( self, package, extraArgs = "", env = {}, makeExecutable = False, autoEnv = False ):
@@ -389,7 +379,7 @@ class CompileHelper:
       makeCmd = "make -j %d install" % self.__makeJobs
     if extraArgs:
       makeCmd = "%s %s" % ( makeCmd, extraArgs )
-    self.INFO( "Running %s for %s" % ( makeCmd, package ) )
+    logging.info( "Running %s for %s" % ( makeCmd, package ) )
     return self.execCommand( makeCmd, package, env, autoEnv = autoEnv )
 
   def deployPackage( self, package, configureArgs = "", skipConfigure = False, configureExecutable = "configure", configureEnv = {},
@@ -426,25 +416,25 @@ class CompileHelper:
   def pythonExec( self, fileToExec, package = False, extraArgs = "", env = {}, autoEnv = True ):
     pythonExe = os.path.join( self.__prefix, "bin", "python" )
     if not os.path.isfile( pythonExe ):
-      self.ERROR( "Could not find %s" % pythonExe )
+      logging.error( "Could not find %s", pythonExe )
       return False
     cmd = "'%s' '%s'" % ( pythonExe, fileToExec )
     if extraArgs:
       cmd = "%s %s" % ( cmd, extraArgs )
-    self.INFO( "Executing %s" % cmd )
+    logging.info( "Executing %s", cmd )
     return self.execCommand( cmd, package = package, env = env, autoEnv = autoEnv )
 
   def pythonSetupPackage( self, package, setupCommand, extraArgs = "", env = {}, autoEnv = True ):
     pythonExe = os.path.join( self.__prefix, "bin", "python" )
     if not os.path.isfile( pythonExe ):
-      self.ERROR( "Could not find %s" % pythonExe )
+      logging.error( "Could not find %s", pythonExe )
       return False
     cmd = "'%s' '%s' '%s'" % ( pythonExe,
                                os.path.join( self.getPackageDir( package ), 'setup.py' ),
                                setupCommand )
     if extraArgs:
       cmd = "%s %s" % ( cmd, extraArgs )
-    self.INFO( "Executing %s" % cmd )
+    logging.info( "Executing %s", cmd )
     return self.execCommand( cmd, package = package, env = env, autoEnv = autoEnv )
 
   def easyInstall( self, packagesToInstall, switches = "-UZ", env = {}, autoEnv = True ):
@@ -452,10 +442,10 @@ class CompileHelper:
     eaExe = os.path.join( self.__prefix, "bin", "easy_install" )
     for f in ( pythonExe, eaExe ):
       if not os.path.isfile( f ):
-        self.ERROR( "Could not find %s" % f )
+        logging.error( "Could not find %s", f )
         return False
     cmd = "'%s' '%s' %s '%s'" % ( pythonExe, eaExe, switches, packagesToInstall )
-    self.INFO( "Executing %s" % cmd )
+    logging.info( "Executing %s", cmd )
     return self.execCommand( cmd, env = env, autoEnv = autoEnv )
 
   def pip( self, package, switches = "", env = {}, autoEnv = True ):
@@ -463,15 +453,15 @@ class CompileHelper:
     eaExe = os.path.join( self.__prefix, "bin", "pip" )
     for f in ( pythonExe, eaExe ):
       if not os.path.isfile( f ):
-        self.ERROR( "Could not find %s" % f )
+        logging.error( "Could not find %s", f )
         return False
     cmd = "'%s' '%s' install %s '%s'" % ( pythonExe, eaExe, switches, package )
-    self.INFO( "Executing %s" % cmd )
+    logging.info( "Executing %s", cmd )
     return self.execCommand( cmd, env = env, autoEnv = autoEnv )
 
 
   def copyPostInstall( self ):
-    self.INFO( "Copying post install scripts" )
+    logging.info( "Copying post install scripts" )
     psDir = os.path.join( self.__prefix, "postInstall" )
     if not os.path.isdir( psDir ):
       os.makedirs( psDir )
@@ -481,4 +471,4 @@ class CompileHelper:
         continue
       shutil.copy( os.path.join( packagePsDir, entry ),
                    os.path.join( psDir, entry ) )
-      self.INFO( "  Copied %s" % entry )
+      logging.info( "  Copied %s", entry )

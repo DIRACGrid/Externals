@@ -1,17 +1,21 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil, urllib
+__RCSID__ = "$Id$"
+
+import imp
+import os
+import sys
+import urllib
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
 try:
-  fd = open( chFilePath )
-except Exception, e:
+  with open( chFilePath ) as fd:
+    chModule = imp.load_module( "CompileHelper", fd, chFilePath, ( ".py", "r", imp.PY_SOURCE ) )
+except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 
-chModule = imp.load_module( "CompileHelper", fd, chFilePath, ( ".py", "r", imp.PY_SOURCE ) )
-fd.close()
 chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )

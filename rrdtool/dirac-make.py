@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform
+import imp, os, sys
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -16,7 +16,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'rrdtool' : "1.2.27" }
+versions = { 'rrdtool' : "1.5.4" }
 ch.setPackageVersions( versions )
 
 if not ch.downloadPackage( "rrdtool" ):
@@ -34,8 +34,8 @@ env[ 'LDFLAGS' ] = "-L%s" % os.path.join( prefix, "lib" )
 env[ 'CPPFLAGS' ] = ""
 ch.setDefaultEnv( env )
 includeDirs = ( "", "freetype2", "libart-2.0" )
-for dir in includeDirs:
-  env[ 'CPPFLAGS' ] += "-I%s " % os.path.join( prefix, "include", dir )
+for idir in includeDirs:
+  env[ 'CPPFLAGS' ] += "-I%s " % os.path.join( prefix, "include", idir )
 
 configFlags = []
 configFlags.append( "--enable-static" )

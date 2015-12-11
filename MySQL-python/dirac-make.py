@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil
+import imp
+import os
+import sys
+import shutil
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -16,7 +19,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'MySQL-python' : "1.2.2" }
+versions = { 'MySQL-python' : "1.2.5" }
 ch.setPackageVersions( versions )
 
 if not ch.downloadPackage( 'MySQL-python' ):

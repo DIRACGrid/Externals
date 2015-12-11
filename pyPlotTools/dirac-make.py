@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil
+import imp
+import os
+import sys
+import shutil
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
 try:
   fd = open( chFilePath )
-except Exception, e:
+except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 
@@ -17,9 +20,9 @@ chClass = getattr( chModule, "CompileHelper" )
 ch = chClass( here )
 
 versions = { 'Imaging' : "1.1.6",
-             'matplotlib' : '1.3.1',
-             'numpy' : '1.8.1',
-             'pytz' : '2014.4' }
+             'matplotlib' : '1.5.0',
+             'numpy' : '1.10.1',
+             'pytz' : '2015.7' }
 
 ch.setPackageVersions( versions )
 env = { 'PKG_CONFIG_PATH' : os.path.join( ch.getPrefix(), "lib", "pkgconfig" ) }

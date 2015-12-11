@@ -16,10 +16,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'readline' : "6.3",
-             'bzip2' : "1.0.6",
-             'zlib' : "1.2.8",
-             'ncurses' : "5.9",
+versions = { 'ncurses' : "5.9",
              'openssl' : "1.0.2e" }
 
 darwinVer = ch.getDarwinVersion()

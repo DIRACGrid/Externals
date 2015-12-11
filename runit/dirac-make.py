@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil
+import imp, os, sys, shutil
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -62,4 +62,3 @@ fd.close()
 for cmd in commands:
   ch.INFO( "Copying %s to %s" % ( cmd, binDir ) )
   shutil.copy( os.path.join( ch.getPackageDir( 'runit' ), "command", cmd ), binDir )
-

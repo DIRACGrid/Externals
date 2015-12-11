@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil
+import imp, os, sys, shutil
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
 try:
   fd = open( chFilePath )
-except Exception, e:
+except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 

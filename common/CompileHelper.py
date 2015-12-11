@@ -163,7 +163,7 @@ class CompileHelper(object):
     else:
       for tarExt in ( "tar.gz", "tar.bz2" ):
         remoteLocs.append( ( "%s/%s/%s.%s" % ( PKG_SOURCE, self.__moduleName, package, tarExt ),
-                           os.path.join( self.__packageRoot, "%s.%s" % ( package, tarExt ) ) ) )
+                             os.path.join( self.__packageRoot, "%s.%s" % ( package, tarExt ) ) ) )
     for remoteURL, localFile in remoteLocs:
       logging.info( "Trying to download %s", remoteURL )
       try:
@@ -390,7 +390,8 @@ class CompileHelper(object):
       return False
     self.unTarPackage( package )
     if not skipConfigure:
-      if not self.doConfigure( package, extraArgs = configureArgs, env = configureEnv, configureExecutable = configureExecutable, autoEnv = autoEnv ):
+      if not self.doConfigure( package, extraArgs = configureArgs, env = configureEnv,
+                               configureExecutable = configureExecutable, autoEnv = autoEnv ):
         return False
     if not skipMake:
       if not makeSteps:

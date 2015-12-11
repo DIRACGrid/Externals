@@ -17,7 +17,8 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'mock' : "1.3.0",
+versions = { 'sqlalchemy' : "1.0.9",
+             'mock' : "1.3.0",
              'Sphinx' : '1.3.1',
              'rst2pdf' : '0.93',
              'nose' : '1.3.7',

@@ -16,8 +16,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'sqlite' : "3.8.8.3",
-             'readline' : "6.3",
+versions = { 'readline' : "6.3",
              'bzip2' : "1.0.6",
              'zlib' : "1.2.8",
              'ncurses' : "5.9",
@@ -41,11 +40,6 @@ if compileLibs:
   if not ch.deployPackage( 'readline', configureArgs = '--enable-shared' ):
     ch.ERROR( "Could not deploy readline" )
     sys.exit( 1 )
-
-  if not ch.deployPackage( 'sqlite', configureArgs = '--enable-shared --enable-threadsafe' ):
-    ch.ERROR( "Could not deploy sqlite" )
-    sys.exit( 1 )
-
 
   if not ch.deployPackage( 'bzip2', makeSteps = [ "-f Makefile-libbz2_so", "" ],
                            installArgs = "PREFIX='%s'" % ch.getPrefix(), skipConfigure = True,

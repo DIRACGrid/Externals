@@ -30,7 +30,7 @@ if not os.path.isfile( lighttpdFilePath ):
   try:
     urllib.urlretrieve( "http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-%s.tar.bz2" % versions[ 'lighttpd' ],
                         lighttpdFilePath )
-  except Exception, e:
+  except Exception as e:
     ch.ERROR( "Could not retrieve lighttpd %s: %s" % ( versions[ 'lighttpd' ], e ) )
     sys.exit( 1 )
 

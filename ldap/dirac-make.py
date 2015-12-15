@@ -6,7 +6,7 @@ here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
 try:
   fd = open( chFilePath )
-except Exception, e:
+except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 
@@ -26,7 +26,7 @@ if not os.path.isfile( ldapFilePath ):
     ch.INFO( "Retrieving %s" % ldapFile )
     urllib.urlretrieve( "ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/%s" % ( ldapFile ),
                         ldapFilePath )
-  except Exception, e:
+  except Exception as e:
     ch.ERROR( "Could not retrieve ldap: %s" % e )
     sys.exit( 1 )
 

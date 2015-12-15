@@ -9,7 +9,7 @@ chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py
 try:
   with open( chFilePath ) as fd:
     chModule = imp.load_module( "CompileHelper", fd, chFilePath, ( ".py", "r", imp.PY_SOURCE ) )
-except Exception, e:
+except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 

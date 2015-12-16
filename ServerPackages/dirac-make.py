@@ -18,12 +18,6 @@ chClass = getattr( chModule, "CompileHelper" )
 ch = chClass( here )
 
 versions = { 'sqlalchemy' : "1.0.9",
-             'mock' : "1.3.0",
-             'Sphinx' : '1.3.1',
-             'rst2pdf' : '0.93',
-             'nose' : '1.3.7',
-             'pylint' : '1.4.4',
-             'coverage' : '4.0.3',
              'pexpect' : '4.0.1'}
 
 ch.setPackageVersions( versions )

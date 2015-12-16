@@ -17,9 +17,12 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'simplejson' : "3.8.1",
-             'fuse-python' : "0.2",
-             'pyparsing' : '2.0.6'}
+versions = { 'mock' : "1.3.0",
+             'Sphinx' : '1.3.1',
+             'rst2pdf' : '0.93',
+             'nose' : '1.3.7',
+             'pylint' : '1.4.4',
+             'coverage' : '4.0.3'}
 
 ch.setPackageVersions( versions )
 

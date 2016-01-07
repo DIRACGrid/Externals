@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-import imp, os, sys, shutil
+import imp
+import os
+import sys
+import shutil
 import logging
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -50,7 +53,7 @@ fd.write( "runsvctrl\nrunsvstat\n" )
 fd.close()
 
 for step in ( "compile", ):
-  logging.info( "Executing %s step" % step )
+  logging.info( "Executing %s step", step )
   if not ch.execRaw( os.path.join( "package", step ), cwd = ch.getPackageDir( "runit" ) ):
     logging.error( "Could not deploy runit" )
     sys.exit( 1 )

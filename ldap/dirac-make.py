@@ -29,7 +29,7 @@ ldapFile = "openldap-%s.tgz" % versions[ 'openldap' ]
 ldapFilePath = os.path.join( here, ldapFile )
 if not os.path.isfile( ldapFilePath ):
   try:
-    ch.INFO( "Retrieving %s" % ldapFile )
+    logging.info( "Retrieving %s", ldapFile )
     urllib.urlretrieve( "ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/%s" % ( ldapFile ),
                         ldapFilePath )
   except Exception as e:

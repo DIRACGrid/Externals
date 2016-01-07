@@ -18,7 +18,12 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'ncurses' : "5.9",
+versions = { 'sqlite' : "3.8.8.3",
+             'readline' : "6.3",
+             'sqlite' : "3.8.8.3",
+             'bzip2' : "1.0.6",
+             'zlib' : '1.2.8',
+             'ncurses' : "5.9",
              'openssl' : "1.0.2e" }
 
 darwinVer = ch.getDarwinVersion()

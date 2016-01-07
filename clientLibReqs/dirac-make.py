@@ -60,7 +60,7 @@ if compileLibs:
 ossltar = os.path.join( here, "openssl-%s.tar.gz" % versions[ 'openssl' ] )
 if not os.path.isfile( ossltar ):
   ossurl = "http://www.openssl.org/source/openssl-%s.tar.gz" % ( versions[ 'openssl' ] )
-  ch.INFO( "Downloading %s" % ossurl )
+  logging.info( "Downloading %s" % ossurl )
   try:
     urllib.urlretrieve( ossurl,
                         ossltar )

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import imp, os, sys, shutil
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -20,11 +22,11 @@ versions = { 'runit' : "2.1.1" }
 ch.setPackageVersions( versions )
 
 if not ch.downloadPackage( "runit" ):
-  ch.ERROR( "Could not download runit" )
+  logging.error( "Could not download runit" )
   sys.exit( 1 )
 
 if not ch.unTarPackage( "runit" ):
-  ch.ERROR( "Could not deploy runit" )
+  logging.error( "Could not deploy runit" )
   sys.exit( 1 )
 
 #Hack because runit is badly packaged
@@ -39,7 +41,7 @@ if darwinVer:
   ch.replaceInFile( os.path.join( ch.getPackageDir( 'runit' ), 'src', "Makefile" ),
                     " -static", "" )
 
-ch.INFO( "Moding commands" )
+logging.info( "Moding commands" )
 ch.replaceInFile( os.path.join( ch.getPackageDir( 'runit' ), 'src', 'Makefile' ),
                   "IT=", "IT=runsvctrl runsvstat " )
 commandsFilePath = os.path.join( ch.getPackageDir( 'runit' ), "package", "commands" )
@@ -48,9 +50,9 @@ fd.write( "runsvctrl\nrunsvstat\n" )
 fd.close()
 
 for step in ( "compile", ):
-  ch.INFO( "Executing %s step" % step )
+  logging.info( "Executing %s step" % step )
   if not ch.execRaw( os.path.join( "package", step ), cwd = ch.getPackageDir( "runit" ) ):
-    ch.ERROR( "Could not deploy runit" )
+    logging.error( "Could not deploy runit" )
     sys.exit( 1 )
 
 binDir = os.path.join( ch.getPrefix(), "bin" )
@@ -60,5 +62,5 @@ fd = open( commandsFilePath, "r" )
 commands = [ line.strip() for line in fd.readlines() if line.strip() ]
 fd.close()
 for cmd in commands:
-  ch.INFO( "Copying %s to %s" % ( cmd, binDir ) )
+  logging.info( "Copying %s to %s" % ( cmd, binDir ) )
   shutil.copy( os.path.join( ch.getPackageDir( 'runit' ), "command", cmd ), binDir )

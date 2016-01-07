@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, urllib
+import imp
+import os
+import sys
+import urllib
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -27,7 +33,7 @@ if not os.path.isfile( ldapFilePath ):
     urllib.urlretrieve( "ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/%s" % ( ldapFile ),
                         ldapFilePath )
   except Exception as e:
-    ch.ERROR( "Could not retrieve ldap: %s" % e )
+    logging.error( "Could not retrieve ldap: %s" % e )
     sys.exit( 1 )
 
 
@@ -36,16 +42,16 @@ if True:
   ch.setDefaultEnv( { 'CFLAGS' : "-g -O2 -D_GNU_SOURCE" } )
   if not ch.deployPackage( 'openldap', makeSteps = [ 'depend', '' ],
                            configureArgs = "--enable-slapd=no --without-tls --enable-slurpd=no --enable-shared" ):
-    ch.ERROR( "Could not deploy openldap" )
+    logging.error( "Could not deploy openldap" )
     sys.exit( 1 )
 
 ch.setDefaultEnv( {} )
 if not ch.downloadPackage( 'python-ldap' ):
-  ch.ERROR( "Could not download python-ldap" )
+  logging.error( "Could not download python-ldap" )
   sys.exit( 1 )
 
 if not ch.unTarPackage( 'python-ldap' ):
-  ch.ERROR( "Could not untar python-ldap" )
+  logging.error( "Could not untar python-ldap" )
   sys.exit( 1 )
 
 setupFile = os.path.join( ch.getPackageDir( 'python-ldap' ), 'setup.cfg' )
@@ -54,5 +60,5 @@ ch.replaceREInFile( setupFile, r"^libs *=.*$", "libs = ldap_r lber" )
 ch.replaceREInFile( setupFile, r"^library_dirs *=.*$", "library_dirs = %s" % os.path.join( ch.getPrefix(), "lib" ) )
 ch.replaceREInFile( setupFile, r"^include_dirs *=.*$", "include_dirs = %s" % os.path.join( ch.getPrefix(), "include" ) )
 if not ch.pythonSetupPackage( "python-ldap", "install" ):
-  ch.ERROR( "Could not deploy python-ldap" )
+  logging.error( "Could not deploy python-ldap" )
   sys.exit( 1 )

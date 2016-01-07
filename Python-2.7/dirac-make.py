@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, urllib
+import imp, os, sys, urllib
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -47,14 +50,14 @@ if not os.path.isfile( pythonFilePath ):
     urllib.urlretrieve( "http://python.org/ftp/python/%s/%s" % ( versions[ 'Python' ], pythonFile ),
                         os.path.join( here, pythonFile ) )
   except Exception as e:
-    ch.ERROR( "Could not retrieve python 2.7: %s" % e )
+    logging.error( "Could not retrieve python 2.7: %s", e )
     sys.exit( 1 )
 
 
 ch.setPackageVersions( versions )
 if True:
   if not ch.unTarPackage( "Python" ):
-    ch.ERROR( "Could not untar python" )
+    logging.error( "Could not untar python" )
     sys.exit( 1 )
 
   prefix = ch.getPrefix()
@@ -62,22 +65,22 @@ if True:
   configureArgs = " --enable-shared --enable-static --enable-unicode=ucs4 "
 
   if not ch.doConfigure( "Python", extraArgs = configureArgs ):
-    ch.ERROR( "Could not deploy Python" )
+    logging.error( "Could not deploy Python" )
     sys.exit( 1 )
 
   for func in ( ch.doMake, ch.doInstall ):
     if not func( "Python" ):
-      ch.ERROR( "Could not deploy Python" )
+      logging.error( "Could not deploy Python" )
       sys.exit( 1 )
 
 if not ch.pythonExec( os.path.join( here, "distribute_setup.py" ) ):
-  ch.ERROR( "Could not install distribute" )
+  logging.error( "Could not install distribute" )
   sys.exit( 1 )
 
 if not ch.pythonExec( os.path.join( here, "ez_setup.py" ) ):
-  ch.ERROR( "Could not install ez_setup" )
+  logging.error( "Could not install ez_setup" )
   sys.exit( 1 )
 
 if not ch.pythonExec( os.path.join( here, "get-pip.py" ) ):
-  ch.ERROR( "Could not install pip" )
+  logging.error( "Could not install pip" )
   sys.exit( 1 )

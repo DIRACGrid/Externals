@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 import imp, os, sys
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -20,11 +23,11 @@ versions = { 'rrdtool' : "1.5.4" }
 ch.setPackageVersions( versions )
 
 if not ch.downloadPackage( "rrdtool" ):
-  ch.ERROR( "Could not download rrdtool" )
+  logging.error( "Could not download rrdtool" )
   sys.exit( 1 )
 
 if not ch.unTarPackage( "rrdtool" ):
-  ch.ERROR( "Could not deploy rrdtool" )
+  logging.error( "Could not deploy rrdtool" )
   sys.exit( 1 )
 
 prefix = ch.getPrefix()
@@ -45,5 +48,5 @@ configFlags.append( "--disable-ruby" )
 configFlags.append( "--disable-perl" )
 configFlags.append( "--disable-tcl" )
 if not ch.deployPackage( "rrdtool", configureArgs = " ".join( configFlags ) ):
-  ch.ERROR( "Could not deploy rrdtool" )
+  logging.error( "Could not deploy rrdtool" )
   sys.exit( 1 )

@@ -4,6 +4,8 @@ import imp
 import os
 import sys
 import shutil
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -23,11 +25,11 @@ versions = { 'MySQL-python' : "1.2.5" }
 ch.setPackageVersions( versions )
 
 if not ch.downloadPackage( 'MySQL-python' ):
-  ch.ERROR( "Could not deploy MySQL-python" )
+  logging.error( "Could not deploy MySQL-python" )
   sys.exit( 1 )
 
 if not ch.unTarPackage( 'MySQL-python' ):
-  ch.ERROR( "Could not deploy MySQL-python" )
+  logging.error( "Could not deploy MySQL-python" )
   sys.exit( 1 )
 
 packageDir = ch.getPackageDir( "MySQL-python" )
@@ -60,5 +62,5 @@ if ch.getDarwinVersion():
                     "#define uint unsigned int", "#define PATATATRONHACKz0R" )
 
 if not ch.easyInstall( packageDir ):
-  ch.ERROR( "Could not deploy MySQL-python" )
+  logging.error( "Could not deploy MySQL-python" )
   sys.exit( 1 )

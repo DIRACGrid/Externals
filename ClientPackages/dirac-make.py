@@ -3,6 +3,8 @@
 import imp
 import os
 import sys
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -26,7 +28,7 @@ ch.setPackageVersions( versions )
 for package in versions:
   packageToInstall = "%s>=%s" % ( package, versions[ package ] )
   if not ch.easyInstall( packageToInstall ):
-    ch.ERROR( "Could not deploy %s with easy_install" % package )
+    logging.error( "Could not deploy %s with easy_install", package )
     if not ch.pip( packageToInstall ):
-      ch.ERROR( "Could not deploy %s with pip" % package )
+      logging.error( "Could not deploy %s with pip", package )
       sys.exit( 1 )

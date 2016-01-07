@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 #To install this, you need to have ncurses-static installed.
 
-import imp, os, sys, platform, shutil
+import imp
+import os
+import sys
+import shutil
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -56,13 +62,12 @@ configureArgs.append( "--with-extra-charsets=complex" )
 configureArgs.append( "--with-readline" )
 
 if not ch.deployPackage( "mysql", configureArgs = " ".join( configureArgs ) ):
-  ch.ERROR( "Could not deploy package mysql" )
+  logging.error( "Could not deploy package mysql" )
   sys.exit( 1 )
 
 etcDir = os.path.join( dataDir, "etc" )
 if not os.path.isdir( etcDir ):
   os.makedirs( etcDir )
 
-shutil.copy( os.path.join( here, "my-huge.cnf" ), 
+shutil.copy( os.path.join( here, "my-huge.cnf" ),
              os.path.join( etcDir, "my.cnf" ) )
-

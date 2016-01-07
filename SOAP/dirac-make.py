@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil
+import imp, os, sys
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -22,5 +25,5 @@ ch.setPackageVersions( versions )
 
 for package in versions:
   if not ch.easyInstall( "%s>=%s" % ( package, versions[ package ] ) ):
-    ch.ERROR( "Could not deploy %s" % package )
+    logging.error( "Could not deploy %s", package )
     sys.exit( 1 )

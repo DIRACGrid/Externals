@@ -3,6 +3,8 @@
 import imp
 import os
 import sys
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
@@ -26,5 +28,5 @@ ch.setPackageVersions( versions )
 
 for package in versions:
   if not ch.deployPackage( package, configureArgs = "--enable-shared" ):
-    ch.ERROR( "Could not deploy %s" % package )
+    logging.error( "Could not deploy %s" % package )
     sys.exit( 1 )

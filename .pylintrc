@@ -73,9 +73,6 @@ comment=yes
 
 [BASIC]
 
-# Required attributes for module, separated by a comma
-required-attributes=__RCSID__
-
 # List of builtins function names that should not be used, separated by a comma
 bad-functions=map,filter,apply,input,raw_input,has_key
 

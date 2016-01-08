@@ -24,7 +24,7 @@ chClass = getattr( chModule, "CompileHelper" )
 ch = chClass( here )
 
 
-versions = { 'mysql' : "5.1.53" }
+versions = { 'mysql' : "5.6.23" }
 
 ch.setPackageVersions( versions )
 

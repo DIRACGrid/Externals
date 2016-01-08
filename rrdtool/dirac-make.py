@@ -19,7 +19,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'rrdtool' : "1.5.4" }
+versions = { 'rrdtool' : "1.4.9" }
 ch.setPackageVersions( versions )
 
 if not ch.downloadPackage( "rrdtool" ):

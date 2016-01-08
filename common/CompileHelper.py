@@ -8,7 +8,7 @@ import platform
 import re
 import urllib2
 import logging
-logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG)
 
 try:
   import subprocess

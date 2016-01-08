@@ -20,7 +20,8 @@ chClass = getattr( chModule, "CompileHelper" )
 ch = chClass( here )
 
 versions = { 'sqlalchemy' : "1.0.9",
-             'pexpect' : '4.0.1'}
+             'pexpect' : '4.0.1',
+             'MySQL-python' : '1.2.5'}
 
 ch.setPackageVersions( versions )
 

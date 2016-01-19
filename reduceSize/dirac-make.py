@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, urllib, re, shutil
+import imp, os, sys, re, shutil
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
 try:
   fd = open( chFilePath )
-except Exception, e:
+except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 

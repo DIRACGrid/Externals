@@ -1,9 +1,51 @@
-*.tgz
-*.tar.gz
-*.tar.bz2
-*.tbz
+# Python
+*.py[cod]
 
-*/*-[0-9].[0-9]*/
+# C extensions
+*.so
+var
+sdist
+lib
+lib64
 
-*.pyc
-*.pyo
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+develop-eggs
+.installed.cfg
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+# Eclipse
+.project
+.pydevproject
+.pyproject
+.settings
+.metadata
+
+# Vim 
+.*.sw[a-z]
+*.un~
+Session.vim
+
+# test stuff
+.cache
+__pycache__
+pytests.xml
+nosetests.xml

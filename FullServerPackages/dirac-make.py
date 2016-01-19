@@ -19,14 +19,21 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-
-versions = { 'libart_lgpl' : "2.3.20",
-             'freetype' : "2.3.11",
-             'libpng' : "1.2.40" }
+versions = { 'mock' : "1.3.0",
+             'Sphinx' : '1.3.1',
+             'rst2pdf' : '0.93',
+             'nose' : '1.3.7',
+             'pylint' : '1.4.4',
+             'coverage' : '4.0.3',
+             'pytest' : '2.8.5',
+             'pytest-cov' : '2.2.0'}
 
 ch.setPackageVersions( versions )
 
 for package in versions:
-  if not ch.deployPackage( package, configureArgs = "--enable-shared" ):
-    logging.error( "Could not deploy %s" % package )
-    sys.exit( 1 )
+  packageToInstall = "%s>=%s" % ( package, versions[ package ] )
+  if not ch.easyInstall( packageToInstall ):
+    logging.error( "Could not deploy %s with easy_install", package )
+    if not ch.pip( packageToInstall ):
+      logging.error( "Could not deploy %s with pip", package )
+      sys.exit( 1 )

@@ -1,17 +1,22 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, shutil, urllib
+import imp
+import os
+import sys
+import urllib
+import logging
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
 try:
-  fd = open( chFilePath )
-except Exception, e:
+  with open( chFilePath ) as fd:
+    chModule = imp.load_module( "CompileHelper", fd, chFilePath, ( ".py", "r", imp.PY_SOURCE ) )
+except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 
-chModule = imp.load_module( "CompileHelper", fd, chFilePath, ( ".py", "r", imp.PY_SOURCE ) )
-fd.close()
 chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
@@ -26,12 +31,12 @@ if not os.path.isfile( lighttpdFilePath ):
   try:
     urllib.urlretrieve( "http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-%s.tar.bz2" % versions[ 'lighttpd' ],
                         lighttpdFilePath )
-  except Exception, e:
-    ch.ERROR( "Could not retrieve lighttpd %s: %s" % ( versions[ 'lighttpd' ], e ) )
+  except Exception as e:
+    logging.error( "Could not retrieve lighttpd %s: %s" % ( versions[ 'lighttpd' ], e ) )
     sys.exit( 1 )
 
 if not ch.deployPackage( 'pcre' ):
-  ch.ERROR( "Could not deploy pcre" )
+  logging.error( "Could not deploy pcre" )
   sys.exit( 1 )
 
 prefix = ch.getPrefix()
@@ -43,7 +48,7 @@ configArgs.append( '--with-openssl' )
 env = { 'PATH' : '%s:%s' % ( os.path.join( ch.getPrefix(), 'bin' ), os.environ[ 'PATH' ] ) }
 ch.setDefaultEnv( env )
 if not ch.deployPackage( 'lighttpd', configureArgs = " ".join( configArgs ) ):
-  ch.ERROR( "Could not deploy lighttpd" )
+  logging.error( "Could not deploy lighttpd" )
   sys.exit( 1 )
 
 ch.copyPostInstall()

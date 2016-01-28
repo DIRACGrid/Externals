@@ -34,6 +34,15 @@ class CompileHelper(object):
     self.__packageVersions = {}
     self.__defaultEnv = {}
     self.__processCommandLine()
+    if self.__prefix:
+      if "PATH" in os.environ and os.environ['PATH']:
+        os.environ['PATH'] = "%s:%s" % ( os.path.join( self.__prefix, 'bin' ), os.environ['PATH'] )
+      else:
+        os.environ['PATH'] = os.path.join( self.__prefix, 'bin' )
+      if "LD_LIBRARY_PATH" in os.environ and os.environ['LD_LIBRARY_PATH']:
+        os.environ['LD_LIBRARY_PATH'] = "%s:%s" % ( os.path.join( self.__prefix, 'lib' ), os.environ['LD_LIBRARY_PATH'] )
+      else:
+        os.environ['LD_LIBRARY_PATH'] = os.path.join( self.__prefix, 'lib' )
 
   def getDarwinVersion( self ):
     return ".".join( platform.mac_ver()[0].split( "." )[:2] )

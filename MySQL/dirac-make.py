@@ -26,8 +26,15 @@ dataDir = os.path.join( os.path.dirname( ch.getPrefix() ), "mysql" )
 if not os.path.isdir( dataDir ):
   os.makedirs( dataDir )
 
+configureArgs = []
+configureArgs.append( "-DINSTALL_LIBDIR='%s/lib'" % ch.getPrefix() )
+configureArgs.append( "-DINSTALL_BINDIR='%s/bin'" % ch.getPrefix() )
+configureArgs.append( "-DINSTALL_SBINDIR='%s/sbin'" % ch.getPrefix() )
+configureArgs.append( "-DCMAKE_INSTALL_PREFIX='%s'" % dataDir )
+
 if not ch.deployPackage( "mysql",
-                         configureExecutable = "/usr/bin/cmake" ):
+                         configureExecutable = "/usr/bin/cmake",
+                         configureArgs = " ".join( configureArgs )):
   ch.ERROR( "Could not deploy package mysql" )
   sys.exit( 1 )
 

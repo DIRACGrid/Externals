@@ -358,8 +358,9 @@ class CompileHelper(object):
       return os.system( "%s cd '%s'; %s" % ( envStr, cwd, command ) ) == 0
 
   def doConfigure( self, package, extraArgs = "", env = {}, configureExecutable = "configure", autoEnv = False ):
-    configurePath = os.path.join( self.__packageRoot, package, configureExecutable )
     configureCmd = "./%s --prefix='%s' %s" % ( configureExecutable, self.__prefix, extraArgs )
+    if 'cmake' in configureExecutable:
+      configureCmd = "%s -DCMAKE_INSTALL_PREFIX='%s' %s" % ( configureExecutable, self.__prefix, extraArgs )
     logging.info( "Running %s for %s" % ( configureCmd, package ) )
     return self.execCommand( configureCmd, package, env, autoEnv = autoEnv )
 

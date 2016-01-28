@@ -44,6 +44,10 @@ if compileLibs:
     logging.error( "Could not deploy readline" )
     sys.exit( 1 )
 
+  if not ch.deployPackage( 'sqlite', configureArgs = '--enable-shared --enable-threadsafe' ):
+    ch.ERROR( "Could not deploy sqlite" )
+    sys.exit( 1 )
+
   if not ch.deployPackage( 'bzip2', makeSteps = [ "-f Makefile-libbz2_so", "" ],
                            installArgs = "PREFIX='%s'" % ch.getPrefix(), skipConfigure = True,
                            onlyOneMakeStepRequired = darwinVer ):

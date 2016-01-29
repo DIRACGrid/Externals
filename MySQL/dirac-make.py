@@ -26,11 +26,22 @@ dataDir = os.path.join( os.path.dirname( ch.getPrefix() ), "mysql" )
 if not os.path.isdir( dataDir ):
   os.makedirs( dataDir )
 
+trashDir = os.path.join( os.path.dirname( ch.getPrefix() ), "trash" )
+if not os.path.isdir( trashDir ):
+  os.makedirs( trashDir )
+
 configureArgs = []
-configureArgs.append( "-DINSTALL_LIBDIR='%s/lib'" % ch.getPrefix() )
-configureArgs.append( "-DINSTALL_BINDIR='%s/bin'" % ch.getPrefix() )
-configureArgs.append( "-DINSTALL_SBINDIR='%s/sbin'" % ch.getPrefix() )
-configureArgs.append( "-DCMAKE_INSTALL_PREFIX='%s'" % dataDir )
+configureArgs.append( "-DCMAKE_INSTALL_PREFIX='%s'" % ch.getPrefix() )
+configureArgs.append( "-DINSTALL_SUPPORTFILESDIR='%s/share/mysql'" % dataDir )
+
+# We do not need thos
+configureArgs.append( "-DINSTALL_MYSQLTESTDIR='%s'" % trashDir )
+configureArgs.append( "-DINSTALL_INFODIR='%s'" % trashDir )
+configureArgs.append( "-DINSTALL_DOCDIR='%s'" % trashDir )
+configureArgs.append( "-DINSTALL_DOCREADMEDIR='%s'" % trashDir )
+configureArgs.append( "-DINSTALL_MANDIR='%s'" % trashDir )
+
+configureArgs.append( "-DWITH_EMBEDDED_SERVER=0" )
 
 if not ch.deployPackage( "mysql",
                          configureExecutable = "/usr/bin/cmake",

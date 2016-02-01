@@ -25,18 +25,14 @@ socket          = /tmp/mysql.sock
 [mysqld]
 port            = 3306
 socket          = /tmp/mysql.sock
-#skip-locking
 key_buffer = 384M
 max_allowed_packet = 16M
-#table_cache = 512
 sort_buffer_size = 2M
 read_buffer_size = 2M
 read_rnd_buffer_size = 8M
 myisam_sort_buffer_size = 64M
 thread_cache_size = 8
 query_cache_size = 32M
-# Try number of CPU's*2 for thread_concurrency
-thread_concurrency = 8
 
 # Don't listen on a TCP/IP port at all. This can be a security enhancement,
 # if all processes that need to connect to mysqld run on the same host.

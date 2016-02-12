@@ -33,9 +33,7 @@ ch.setPackageVersions( versions )
 compileLibs = True
 
 if compileLibs:
-  if not ch.deployPackage( 'zlib' ):
-    logging.error( "Could not deploy zlib" )
-    sys.exit( 1 )
+
   if not ch.deployPackage( 'zlib', configureArgs = '--shared' ):
     logging.error( "Could not deploy zlib" )
     sys.exit( 1 )

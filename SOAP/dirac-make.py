@@ -19,7 +19,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'suds' : "0.4",
+versions = { 'suds-jurko' : "0.6",
              'boto' : '1.9b' }
 ch.setPackageVersions( versions )
 

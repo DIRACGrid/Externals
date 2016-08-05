@@ -22,7 +22,8 @@ ch = chClass( here )
 versions = { 'sqlalchemy' : "1.0.9",
              'pexpect' : '4.0.1',
              'MySQL-python' : '1.2.5',
-             'requests' : '2.9.1'}
+             'requests' : '2.9.1',
+             'tornado' : '4.3' }
 
 ch.setPackageVersions( versions )
 

@@ -23,7 +23,7 @@ versions = { 'readline' : "6.3",
              'zlib' : '1.2.8',
              'ncurses' : "5.9",
              'sqlite' : "3.8.8.3",
-             'openssl' : "1.0.2f" }
+             'openssl' : "1.0.1g" }
 
 darwinVer = ch.getDarwinVersion()
 

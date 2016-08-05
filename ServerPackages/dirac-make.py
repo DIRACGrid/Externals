@@ -23,7 +23,11 @@ versions = { 'sqlalchemy' : "1.0.9",
              'pexpect' : '4.0.1',
              'MySQL-python' : '1.2.5',
              'requests' : '2.9.1',
-             'futures' : '3.0.5' }
+             'matplotlib' : '1.5.1',
+             'tornado' : '4.3',
+             'apache-libcloud' : '1.1.0',
+             'elasticsearch-dsl':'2.0.0',
+             'psutil':'4.2.0' }
 
 ch.setPackageVersions( versions )
 

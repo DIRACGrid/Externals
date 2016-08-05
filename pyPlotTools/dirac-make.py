@@ -24,6 +24,7 @@ ch = chClass( here )
 versions = { 'Imaging' : "1.1.6",
              'matplotlib' : '1.5.0',
              'numpy' : '1.10.1',
+             'Pillow' : '3.1.1',
              'pytz' : '2015.7' }
 
 ch.setPackageVersions( versions )

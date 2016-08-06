@@ -21,42 +21,15 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'Imaging' : "1.1.6",
-             'matplotlib' : '1.5.0',
-             'numpy' : '1.10.1',
-             'Pillow' : '3.1.1',
-             'pytz' : '2015.7' }
+versions = { 'matplotlib' : '1.5.1',
+             'Pillow' : '3.1.1' }
 
 ch.setPackageVersions( versions )
-env = { 'PKG_CONFIG_PATH' : os.path.join( ch.getPrefix(), "lib", "pkgconfig" ) }
-ch.setDefaultEnv( env )
-for package in ( 'numpy', 'Imaging', 'matplotlib', 'pytz' ):
-  if not ch.downloadPackage( package ):
-    logging.error( "Could not download %s", package )
-    logging.info( "Trying pip" )
-    if ch.pip( "%s==%s" % ( package, versions[package] ) ):
-      continue
-    logging.error( "Could not pip %s", package )
-    sys.exit(1)
-  if not ch.unTarPackage( package ):
-    logging.error( "Could not deploy %s", package )
-    sys.exit( 1 )
-  fd = open( os.path.join( ch.getPackageDir( package ), "site.cfg" ), "w" )
-  fd.write( """\
-[DEFAULT]
-library_dirs=%s
-include_dirs=%s
-""" % ( ", ".join( ch.getPrefixLibDirs() ), ", ".join( ch.getPrefixIncludeDirs() ) ) )
-  fd.close()
 
-  packageDir = ch.getPackageDir( package )
-  if package == "matplotlib":
-    shutil.copy( os.path.join( here, "setupext.py" ),
-                 os.path.join( packageDir, "setupext.py" ) )
-
-  if not ch.easyInstall( packageDir ):
-    logging.error( "Could not deploy %s", package )
-    logging.info( "Trying pip" )
-    if not ch.pip( "%s==%s" % ( package, versions[package] ) ):
-      logging.error( "Could not pip %s", package )
+for package in versions:
+  packageToInstall = "%s>=%s" % ( package, versions[ package ] )
+  if not ch.easyInstall( packageToInstall ):
+    logging.error( "Could not deploy %s with easy_install", package )
+    if not ch.pip( packageToInstall ):
+      logging.error( "Could not deploy %s with pip", package )
       sys.exit( 1 )

@@ -57,7 +57,7 @@ def stripObjects( dirToExplore = False ):
     objPath = os.path.join( dirToExplore, objName )
     if os.path.isdir( objPath ):
       stripObjects( objPath )
-    elif os.path.isfile( objPath ):
+    elif os.path.isfile( objPath ) and not os.path.islink( objPath ):
       os.system( "strip '%s' 2>/dev/null" % objPath )
 
 darwinVer = ch.getDarwinVersion()

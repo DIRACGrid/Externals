@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, urllib
+import imp, os, sys, platform, urllib2
 import logging
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -63,8 +63,10 @@ if not os.path.isfile( ossltar ):
   ossurl = "http://www.openssl.org/source/openssl-%s.tar.gz" % ( versions[ 'openssl' ] )
   logging.info( "Downloading %s" % ossurl )
   try:
-    urllib.urlretrieve( ossurl,
-                        ossltar )
+    furl = urllib2.urlopen( ossurl )
+    with open( ossltar, "wb") as localFile:
+      localFile.write( furl.read() )
+
   except Exception as e:
     logging.error( "Could not retrieve openssl %s", e )
     sys.exit( 1 )

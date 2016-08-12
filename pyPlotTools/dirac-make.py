@@ -32,4 +32,4 @@ for package in versions:
     logging.error( "Could not deploy %s with easy_install", package )
     if not ch.pip( packageToInstall ):
       logging.error( "Could not deploy %s with pip", package )
-sys.exit( 1 )
+      sys.exit( 1 )

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import imp, os, sys, urllib
+import imp, os, sys, urllib2
 import logging
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -47,8 +47,10 @@ pythonFilePath = os.path.join( here, pythonFile )
 
 if not os.path.isfile( pythonFilePath ):
   try:
-    urllib.urlretrieve( "http://python.org/ftp/python/%s/%s" % ( versions[ 'Python' ], pythonFile ),
-                        os.path.join( here, pythonFile ) )
+    furl = urllib2.urlopen( "http://python.org/ftp/python/%s/%s" % ( versions[ 'Python' ], pythonFile ) )
+    with open( os.path.join( here, pythonFile ), "wb") as localFile:
+      localFile.write( furl.read() )
+
   except Exception as e:
     logging.error( "Could not retrieve python 2.7: %s", e )
     sys.exit( 1 )

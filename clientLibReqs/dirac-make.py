@@ -52,7 +52,8 @@ if compileLibs:
     logging.error( "Could not deploy bzip2" )
     sys.exit( 1 )
 
-  if not ch.deployPackage( 'ncurses', configureArgs = '--with-shared --enable-symlinks --enable-const --enable-tcap-names' ):
+  if not ch.deployPackage( 'ncurses', configureArgs = '--with-shared --enable-symlinks --enable-const --enable-tcap-names',
+                           configureEnv = { "CPPFLAGS": "-P" } ):
     logging.error( "Could not deploy ncurses" )
     sys.exit( 1 )
 

@@ -32,6 +32,7 @@ if not os.path.isdir( trashDir ):
 
 configureArgs = []
 configureArgs.append( "-DCMAKE_INSTALL_PREFIX='%s'" % ch.getPrefix() )
+configureArgs.append( "-DINSTALL_SCRIPTDIR='%s/bin'" % ch.getPrefix() )
 configureArgs.append( "-DINSTALL_SUPPORTFILESDIR='%s/share/mysql'" % shareDir )
 
 # We do not need those
@@ -57,4 +58,6 @@ if not os.path.isdir( etcDir ):
 
 shutil.copy( os.path.join( here, "my-huge.cnf" ),
              os.path.join( etcDir, "my.cnf" ) )
+shutil.copy( os.path.join( shareDir, "share","mysql", "my-default.cnf" ),
+             os.path.join( ch.getPrefix(), "my-default.cnf" ) )
 

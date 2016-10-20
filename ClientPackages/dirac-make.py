@@ -22,6 +22,7 @@ ch = chClass( here )
 versions = { 'simplejson' : "3.8.1",
              # 'fuse-python' : "0.2",
              'pyparsing' : '2.0.6',
+             'requests' : '2.9.1',
              'futures' : '3.0.5' }
 
 ch.setPackageVersions( versions )

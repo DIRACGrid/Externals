@@ -19,7 +19,9 @@ import time
 import fnmatch
 import tempfile
 import tarfile
+import ssl
 from distutils import log
+
 
 try:
     from site import USER_SITE
@@ -190,7 +192,11 @@ def download_setuptools(version=DEFAULT_VERSION, download_base=DEFAULT_URL,
     if not os.path.exists(saveto):  # Avoid repeated downloads
         try:
             log.warn("Downloading %s", url)
-            src = urlopen(url)
+            try:
+              context = ssl._create_unverified_context()
+              src = urlopen( url, context=context )
+            except AttributeError:
+              src = urlopen( url )
             # Read/write all in one block, so we don't create a corrupt file
             # if the download is interrupted.
             data = src.read()

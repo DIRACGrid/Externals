@@ -19,13 +19,14 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'sqlalchemy' : "1.0.9",
-             'pexpect' : '4.0.1',
-             'MySQL-python' : '1.2.5',
-             'tornado' : '4.3',
-             'apache-libcloud' : '1.1.0',
-             'elasticsearch-dsl':'2.0.0',
-             'psutil':'4.2.0' }
+versions = { 'sqlalchemy': "1.1.4",
+             'pexpect': '4.0.1',
+             'MySQL-python': '1.2.5',
+             'tornado': '4.4.2',
+             'apache-libcloud': '1.1.0',
+             'elasticsearch-dsl': '5.0.0',
+             'psutil': '5.0.0',
+             'GitPython': '2.1.0'}
 
 ch.setPackageVersions( versions )
 

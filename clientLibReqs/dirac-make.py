@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, urllib2
+import imp, os, sys, platform, urllib2, ssl
 import logging
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -64,7 +64,8 @@ if not os.path.isfile( ossltar ):
   ossurl = "http://www.openssl.org/source/openssl-%s.tar.gz" % ( versions[ 'openssl' ] )
   logging.info( "Downloading %s" % ossurl )
   try:
-    furl = urllib2.urlopen( ossurl )
+    context = ssl._create_unverified_context()
+    furl = urllib2.urlopen( ossurl, context = context )
     with open( ossltar, "wb") as localFile:
       localFile.write( furl.read() )
 

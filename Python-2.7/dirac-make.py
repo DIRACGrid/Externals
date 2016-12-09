@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import imp, os, sys, urllib2
+import imp, os, sys, urllib2, ssl
 import logging
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -47,7 +47,9 @@ pythonFilePath = os.path.join( here, pythonFile )
 
 if not os.path.isfile( pythonFilePath ):
   try:
-    furl = urllib2.urlopen( "http://python.org/ftp/python/%s/%s" % ( versions[ 'Python' ], pythonFile ) )
+    context = ssl._create_unverified_context()
+    furl = urllib2.urlopen( "http://python.org/ftp/python/%s/%s" % ( versions[ 'Python' ], pythonFile ),
+                            context = context )
     with open( os.path.join( here, pythonFile ), "wb") as localFile:
       localFile.write( furl.read() )
 

@@ -8,6 +8,8 @@ import platform
 import re
 import urllib2
 import logging
+import ssl
+
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG)
 
 try:
@@ -176,7 +178,8 @@ class CompileHelper(object):
     for remoteURL, localFile in remoteLocs:
       logging.info( "Trying to download %s", remoteURL )
       try:
-        remote = urllib2.urlopen( remoteURL )
+        context = ssl._create_unverified_context()
+        remote = urllib2.urlopen( remoteURL, context = context )
       except Exception as e:
         logging.error( "Cannot retrieve %s: %s", remoteURL, str(e) )
         continue

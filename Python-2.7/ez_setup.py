@@ -181,7 +181,7 @@ def has_powershell():
 download_file_powershell.viable = has_powershell
 
 def download_file_curl(url, target):
-    cmd = ['curl', url, '--silent', '--output', target]
+    cmd = ['curl', url, '--silent', '--insecure', '--output', target]
     subprocess.check_call(cmd)
 
 def has_curl():

@@ -24,7 +24,8 @@ versions = { 'simplejson' : "3.8.1",
              'pyparsing' : '2.0.6',
              'requests' : '2.9.1',
              'futures' : '3.0.5',
-             'certifi' : '2016.9.26'}
+             'certifi' : '2016.9.26',
+             'stomp' : '4.1.15'}
 
 ch.setPackageVersions( versions )
 

@@ -25,7 +25,7 @@ versions = { 'simplejson' : "3.8.1",
              'requests' : '2.9.1',
              'futures' : '3.0.5',
              'certifi' : '2016.9.26',
-             'stomp' : '4.1.15'}
+             'stomp.py' : '4.1.15'}
 
 ch.setPackageVersions( versions )
 

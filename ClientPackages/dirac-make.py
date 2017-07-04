@@ -19,13 +19,13 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'simplejson' : "3.8.1",
+versions = { 'simplejson' : "3.11.1",
              # 'fuse-python' : "0.2",
-             'pyparsing' : '2.0.6',
-             'requests' : '2.9.1',
-             'futures' : '3.0.5',
-             'certifi' : '2016.9.26',
-             'stomp.py' : '4.1.15'}
+             'pyparsing' : '2.2.0',
+             'requests' : '2.18.1',
+             'futures' : '3.1.1',
+             'certifi' : '2017.4.17',
+             'stomp.py' : '4.1.18'}
 
 ch.setPackageVersions( versions )
 

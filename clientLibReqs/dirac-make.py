@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 
-import imp, os, sys, platform, urllib2, ssl
+import imp
+import os
+import sys
+import platform
+import urllib2
+import ssl
 import logging
+
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
@@ -20,10 +26,10 @@ ch = chClass( here )
 
 versions = { 'readline' : "6.3",
              'bzip2' : "1.0.6",
-             'zlib' : '1.2.8',
-             'ncurses' : "5.9",
-             'sqlite' : "3.8.8.3",
-             'openssl' : "1.0.1g" }
+             'zlib' : '1.2.11',
+             'ncurses' : "6.0",
+             'sqlite' : "3.19.3",
+             'openssl' : "1.1.0f" }
 
 darwinVer = ch.getDarwinVersion()
 

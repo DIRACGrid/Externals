@@ -23,7 +23,7 @@ compileOpenSSL = False
 if compileOpenSSL:
   osslch = chClass( os.path.join( here, "openssl" ) )
 
-  versions = { 'openssl' : "0.9.8m" }
+  versions = { 'openssl' : "1.0.2l" }
   osslch.setPackageVersions( versions )
 
   osslch.unTarPackage( "openssl" )
@@ -44,12 +44,12 @@ if compileOpenSSL:
     sys.exit( 1 )
 
 ch = chClass( here )
-version = "0.6.3"
+version = "0.6.5"
 ch.setPackageVersions( { "GSI": version } )
 
 gsidir = os.path.join( here, "pyGSI-%s" % version )
 
-ch.downloadPackage( "GSI", "https://github.com/acasajus/pyGSI/archive/%s.tar.gz" % version )
+ch.downloadPackage( "GSI", "https://github.com/DIRACGrid/pyGSI/archive/%s.tar.gz" % version )
 ch.unTarPackage( "GSI" )
 
 libPaths = []

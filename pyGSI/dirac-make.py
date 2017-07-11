@@ -23,7 +23,7 @@ compileOpenSSL = False
 if compileOpenSSL:
   osslch = chClass( os.path.join( here, "openssl" ) )
 
-  versions = { 'openssl' : "0.9.8m" }
+  versions = { 'openssl' : "1.0.2l" }
   osslch.setPackageVersions( versions )
 
   osslch.unTarPackage( "openssl" )

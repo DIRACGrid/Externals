@@ -21,7 +21,7 @@ ch = chClass( here )
 
 
 versions = { 'libart_lgpl' : "2.3.20",
-             'freetype' : "2.8",
+             'freetype' : "2.7.1",
              'libpng' : "1.6.29" }
 
 ch.setPackageVersions( versions )

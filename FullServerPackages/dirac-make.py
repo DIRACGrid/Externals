@@ -25,6 +25,7 @@ versions = { 'mock' : "2.0.0",
              'pylint' : '1.6.5',
              'coverage' : '4.4.1',
              'pytest' : '3.1.2',
+             'hypothesis' : '3.38.5',
              'pytest-cov' : '2.5.1'}
 
 ch.setPackageVersions( versions )

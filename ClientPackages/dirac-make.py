@@ -20,6 +20,7 @@ chClass = getattr( chModule, "CompileHelper" )
 ch = chClass( here )
 
 versions = { 'simplejson' : "3.11.1",
+             'python-json-logger' : '0.1.8',
              # 'fuse-python' : "0.2",
              'pyparsing' : '2.2.0',
              'requests' : '2.18.1',

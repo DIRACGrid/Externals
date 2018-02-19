@@ -24,7 +24,7 @@ versions = { 'sqlalchemy': "1.1.11",
              'MySQL-python': '1.2.5',
              'tornado': '4.4.2',
              'apache-libcloud': '1.1.0',
-             'elasticsearch-dsl': '5.0.0',
+             'elasticsearch-dsl': '6.1.0',
              'psutil': '5.0.0',
              'GitPython': '2.1.5',
              'CMRESHandler': '1.0.0b4'}

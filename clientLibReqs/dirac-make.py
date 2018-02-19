@@ -27,8 +27,8 @@ ch = chClass( here )
 versions = { 'readline' : "6.3",
              'bzip2' : "1.0.6",
              'zlib' : '1.2.11',
-             'ncurses' : "6.0",
-             'sqlite' : "3.19.3",
+             'ncurses' : "6.1",
+             'sqlite' : "3.22.0",
              'openssl' : "1.0.2l" }
 
 darwinVer = ch.getDarwinVersion()

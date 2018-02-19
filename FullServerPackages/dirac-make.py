@@ -20,13 +20,14 @@ chClass = getattr( chModule, "CompileHelper" )
 ch = chClass( here )
 
 versions = { 'mock' : "2.0.0",
-             'Sphinx' : '1.6.2',
+             'Sphinx' : '1.7.0',
              'rst2pdf' : '0.93',
-             'pylint' : '1.6.5',
-             'coverage' : '4.4.1',
-             'pytest' : '3.1.2',
-             'hypothesis' : '3.38.5',
-             'pytest-cov' : '2.5.1'}
+             'pylint' : '1.8.2',
+             'coverage' : '4.5.1',
+             'pytest' : '3.4.0',
+             'pytest-cov' : '2.5.1',
+             'hypothesis' : '3.45.0'
+            }
 
 ch.setPackageVersions( versions )
 

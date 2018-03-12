@@ -469,7 +469,7 @@ class CompileHelper(object):
       if not os.path.isfile( f ):
         logging.error( "Could not find %s", f )
         return False
-    cmd = "'%s' '%s' install --trusted-host pypi.python.org %s '%s'" % ( pythonExe, eaExe, switches, package )
+    cmd = "%s install %s %s" % ( eaExe, switches, package )
     logging.info( "Executing %s", cmd )
     return self.execCommand( cmd, env = env, autoEnv = autoEnv )
 

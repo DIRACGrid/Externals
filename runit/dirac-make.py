@@ -21,7 +21,7 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'runit' : "2.1.1" }
+versions = { 'runit' : "2.1.2" }
 ch.setPackageVersions( versions )
 
 if not ch.downloadPackage( "runit" ):

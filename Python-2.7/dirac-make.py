@@ -1,25 +1,27 @@
 #!/usr/bin/env python
 
-import imp, os, sys, urllib2, ssl
+import imp
+import os
+import sys
+import urllib2
+import ssl
 import logging
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 
+versions = { 'Python' : "2.7.13" }
 
 here = os.path.dirname( os.path.abspath( __file__ ) )
 chFilePath = os.path.join( os.path.dirname( here ) , "common", "CompileHelper.py" )
 try:
-  fd = open( chFilePath )
+  with open( chFilePath ) as fd:
+    chModule = imp.load_module( "CompileHelper", fd, chFilePath, ( ".py", "r", imp.PY_SOURCE ) )
 except Exception as e:
   print "Cannot open %s: %s" % ( chFilePath, e )
   sys.exit( 1 )
 
-chModule = imp.load_module( "CompileHelper", fd, chFilePath, ( ".py", "r", imp.PY_SOURCE ) )
-fd.close()
 chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
-
-versions = { 'Python' : "2.7.13" }
 
 prefix = ch.getPrefix()
 
@@ -59,32 +61,19 @@ if not os.path.isfile( pythonFilePath ):
 
 
 ch.setPackageVersions( versions )
-if True:
-  if not ch.unTarPackage( "Python" ):
-    logging.error( "Could not untar python" )
-    sys.exit( 1 )
+if not ch.unTarPackage( "Python" ):
+  logging.error( "Could not untar python" )
+  sys.exit( 1 )
 
-  prefix = ch.getPrefix()
-  #configureArgs = "CFLAGS='-L%s/lib' CPPFLAGS='-I%s/include -I%s/include/ncurses'" % ( prefix, prefix, prefix )
-  configureArgs = " --enable-shared --enable-static --enable-unicode=ucs4 "
+prefix = ch.getPrefix()
+#configureArgs = "CFLAGS='-L%s/lib' CPPFLAGS='-I%s/include -I%s/include/ncurses'" % ( prefix, prefix, prefix )
+configureArgs = " --enable-shared --enable-static --enable-unicode=ucs4 --with-ensurepip=install"
 
-  if not ch.doConfigure( "Python", extraArgs = configureArgs ):
+if not ch.doConfigure( "Python", extraArgs = configureArgs ):
+  logging.error( "Could not deploy Python" )
+  sys.exit( 1 )
+
+for func in ( ch.doMake, ch.doInstall ):
+  if not func( "Python" ):
     logging.error( "Could not deploy Python" )
     sys.exit( 1 )
-
-  for func in ( ch.doMake, ch.doInstall ):
-    if not func( "Python" ):
-      logging.error( "Could not deploy Python" )
-      sys.exit( 1 )
-
-if not ch.pythonExec( os.path.join( here, "distribute_setup.py" ) ):
-  logging.error( "Could not install distribute" )
-  sys.exit( 1 )
-
-if not ch.pythonExec( os.path.join( here, "ez_setup.py" ) ):
-  logging.error( "Could not install ez_setup" )
-  sys.exit( 1 )
-
-if not ch.pythonExec( os.path.join( here, "get-pip.py" ) ):
-  logging.error( "Could not install pip" )
-  sys.exit( 1 )

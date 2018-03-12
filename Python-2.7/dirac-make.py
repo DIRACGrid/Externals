@@ -67,7 +67,7 @@ if not ch.unTarPackage( "Python" ):
 
 prefix = ch.getPrefix()
 #configureArgs = "CFLAGS='-L%s/lib' CPPFLAGS='-I%s/include -I%s/include/ncurses'" % ( prefix, prefix, prefix )
-configureArgs = " --enable-shared --enable-static --enable-unicode=ucs4 --with-ensurepip=install"
+configureArgs = " --enable-shared --enable-unicode=ucs4 --with-ensurepip=install"
 
 if not ch.doConfigure( "Python", extraArgs = configureArgs ):
   logging.error( "Could not deploy Python" )

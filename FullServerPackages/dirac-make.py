@@ -26,7 +26,8 @@ versions = { 'mock' : "2.0.0",
              'coverage' : '4.5.1',
              'pytest' : '3.4.0',
              'pytest-cov' : '2.5.1',
-             'hypothesis' : '3.45.0'
+             'hypothesis' : '3.45.0',
+             'multi-mechanize' : '1.2.0'
             }
 
 ch.setPackageVersions( versions )

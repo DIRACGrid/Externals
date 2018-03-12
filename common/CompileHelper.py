@@ -1,4 +1,5 @@
-__RCSID__ = "$Id:"
+""" some utilities for compiling
+"""
 
 import sys
 import os

@@ -22,8 +22,8 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'openldap' : "2.4.45",
-             'python-ldap' : '3.0.0b4' }
+versions = { 'openldap' : "2.4.44",
+             'python-ldap' : '2.3.10' }
 
 ldapFile = "openldap-%s.tgz" % versions[ 'openldap' ]
 ldapFilePath = os.path.join( here, ldapFile )

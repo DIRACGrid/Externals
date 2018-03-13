@@ -31,7 +31,7 @@ versions = { 'simplejson' : "3.13.2",
 ch.setPackageVersions( versions )
 
 for package, version in versions.iteritems():
-  packageToInstall = "%s=%s" % (package, version)
+  packageToInstall = "%s==%s" % (package, version)
   if not ch.pip( packageToInstall ):
     logging.error( "Could not deploy %s with pip", package )
     sys.exit( 1 )

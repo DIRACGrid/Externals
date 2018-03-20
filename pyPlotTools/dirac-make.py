@@ -19,8 +19,8 @@ chClass = getattr( chModule, "CompileHelper" )
 
 ch = chClass( here )
 
-versions = { 'matplotlib' : '1.5.3',
-             'Pillow' : '3.1.1' }
+versions = { 'matplotlib' : '2.0.2',
+             'Pillow' : '4.2.1' }
 
 ch.setPackageVersions( versions )
 
